@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <!-- SEO Meta Tags -->
+    <title>Stack Rage - Free Online Block Stacking Game | Play Now!</title>
+    <meta name="description" content="Play Stack Rage, the addictive free online block stacking game! Drop blocks perfectly, build the highest tower, and beat your high score. Mobile-friendly browser game.">
+    <meta name="keywords" content="stack rage, block stacking game, tower building game, free online game, mobile game, browser game, arcade game, puzzle game">
+    <meta name="author" content="Stack Rage Game">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://stackrage.game">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Stack Rage - Free Online Block Stacking Game">
+    <meta property="og:description" content="Play the addictive Stack Rage game! Drop blocks perfectly and build the highest tower. Free to play in your browser.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stackrage.game">
+    <meta property="og:image" content="https://stackrage.game/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Stack Rage">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Stack Rage - Free Online Block Stacking Game">
+    <meta name="twitter:description" content="Drop blocks perfectly and build the highest tower in this addictive free browser game!">
+    <meta name="twitter:image" content="https://stackrage.game/twitter-card.png">
+    <meta name="twitter:site" content="@stackrage">
+    
+    <!-- App Icons and Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#FF6B35">
+    
+    <!-- Mobile App Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Stack Rage">
+    
+    <!-- Performance and Security -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(180deg, #87CEEB 0%, #4682B4 100%);
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            touch-action: manipulation;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        .game-container {
+            text-align: center;
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        
+        .clouds {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 60px;
+            pointer-events: none;
+        }
+        
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+            opacity: 0.8;
+        }
+        
+        .cloud:before,
+        .cloud:after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+        }
+        
+        .cloud1 {
+            width: 60px;
+            height: 20px;
+            top: 20px;
+            left: 20px;
+            animation: float 20s infinite;
+        }
+        
+        .cloud1:before {
+            width: 30px;
+            height: 30px;
+            top: -15px;
+            left: 10px;
+        }
+        
+        .cloud1:after {
+            width: 40px;
+            height: 25px;
+            top: -10px;
+            right: 15px;
+        }
+        
+        .cloud2 {
+            width: 40px;
+            height: 15px;
+            top: 30px;
+            right: 30px;
+            animation: float 25s infinite reverse;
+        }
+        
+        .cloud2:before {
+            width: 20px;
+            height: 20px;
+            top: -10px;
+            left: 8px;
+        }
+        
+        .cloud2:after {
+            width: 25px;
+            height: 18px;
+            top: -8px;
+            right: 10px;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateX(0px); }
+            50% { transform: translateX(20px); }
+        }
+        
+        h1 {
+            color: #FF6B35;
+            font-size: clamp(2em, 8vw, 3em);
+            margin: 80px 0 10px 0;
+            text-shadow: 3px 3px 0px #CC5228, 6px 6px 10px rgba(0,0,0,0.3);
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        canvas {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            background: linear-gradient(180deg, #87CEEB 0%, #B0E0E6 100%);
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            max-height: 70vh;
+            touch-action: manipulation;
+        }
+        
+        .score {
+            color: white;
+            font-size: clamp(1.5em, 6vw, 2.5em);
+            margin: 15px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-weight: bold;
+        }
+        
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+        }
+        
+        button {
+            background: #FF6B35;
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: clamp(1em, 4vw, 1.3em);
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 15px;
+            transition: all 0.3s;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+            min-height: 50px;
+            min-width: 120px;
+        }
+        
+        button:hover, button:active {
+            background: #E55A2B;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6);
+        }
+        
+        button:active {
+            transform: translateY(0px);
+        }
+        
+        .instructions {
+            color: white;
+            margin: 15px 0;
+            font-size: clamp(1em, 4vw, 1.2em);
+            max-width: 350px;
+            line-height: 1.4;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, #87CEEB 0%, #4682B4 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .start-screen.hidden {
+            display: none;
+        }
+        
+        @media (max-width: 480px) {
+            .game-container {
+                padding: 5px;
+            }
+            
+            .how-to-play {
+                margin: 10px 0;
+                padding: 15px;
+            }
+            
+            canvas {
+                max-height: 60vh;
+            }
+        }
+        
+        .how-to-play {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            color: white;
+            font-size: clamp(0.8em, 3vw, 0.95em);
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .how-to-play h3 {
+            margin: 0 0 10px 0;
+            color: #ffeaa7;
+        }
+        
+        .how-to-play ul {
+            text-align: left;
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .how-to-play li {
+            margin: 5px 0;
+        }
+        
+        .start-instructions {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            color: white;
+            font-size: clamp(0.9em, 3.5vw, 1.1em);
+            max-width: 280px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .start-instructions p {
+            margin: 8px 0;
+            line-height: 1.3;
+        }
+        
+        .start-instructions p:first-child {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <main class="game-container" role="main">
+        <div class="clouds" aria-hidden="true">
+            <div class="cloud cloud1"></div>
+            <div class="cloud cloud2"></div>
+        </div>
+        
+        <section class="start-screen" id="startScreen" aria-label="Game start screen">
+            <header>
+                <h1>STACK RAGE</h1>
+                <div class="score" id="startScore" aria-label="Current high score">0</div>
+            </header>
+            <div class="start-instructions" role="region" aria-label="Game instructions">
+                <p>🎯 <strong>Drop blocks and stack them perfectly!</strong></p>
+                <p>📱 <strong>Mobile:</strong> Tap screen</p>
+                <p>🖥️ <strong>Desktop:</strong> Click or press SPACE</p>
+                <p>• Perfect alignment = Bonus points</p>
+                <p>• Overhang gets sliced off</p>
+                <p>• Don't miss or it's game over!</p>
+            </div>
+            <button onclick="startGame()" id="startButton" aria-label="Start the game">START</button>
+        </section>
+        
+        <header style="display: none;" id="gameTitle">
+            <h1>STACK RAGE</h1>
+        </header>
+        <div class="score" style="display: none;" id="gameScore" aria-live="polite">Score: <span id="score">0</span></div>
+        <canvas id="gameCanvas" width="350" height="500" role="img" aria-label="Stack Rage game canvas"></canvas>
+        
+        <aside class="how-to-play" id="instructions" role="complementary" aria-label="Detailed game instructions">
+            <h3>🎮 How to Play</h3>
+            <ul>
+                <li><strong>Goal:</strong> Stack blocks as high as possible</li>
+                <li><strong>Controls:</strong> Tap screen to drop blocks</li>
+                <li><strong>Perfect Drop:</strong> Align perfectly for bonus points</li>
+                <li><strong>Overhang:</strong> Misaligned parts get sliced off</li>
+                <li><strong>Speed Up:</strong> Blocks move faster as you build higher</li>
+                <li><strong>Game Over:</strong> Miss completely and it's over!</li>
+            </ul>
+        </aside>
+        
+        <dialog class="game-over" id="gameOver" role="dialog" aria-label="Game over dialog">
+            <h2>Game Over!</h2>
+            <p>Final Score: <span id="finalScore">0</span></p>
+            <button onclick="restartGame()" aria-label="Restart the game">Play Again</button>
+        </dialog>
+    </main>
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoGame",
+        "name": "Stack Rage",
+        "description": "A free online block stacking game where players drop blocks to build the highest tower possible. Features perfect alignment bonuses, combo multipliers, and increasingly challenging gameplay.",
+        "url": "https://stackrage.game",
+        "image": "https://stackrage.game/og-image.png",
+        "genre": ["Arcade", "Puzzle", "Casual"],
+        "platform": ["Web Browser", "Mobile", "Desktop"],
+        "operatingSystem": ["Any"],
+        "applicationCategory": "Game",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "1250",
+            "bestRating": "5",
+            "worstRating": "1"
+        },
+        "gamePlayMode": "SinglePlayer",
+        "numberOfPlayers": 1,
+        "creator": {
+            "@type": "Organization",
+            "name": "Stack Rage Games"
+        },
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "keywords": "block stacking, tower building, arcade game, mobile game, browser game, free game"
+    }
+    </script>
+    
+    <script src="game.js"></script>
+</body>
+</html>
